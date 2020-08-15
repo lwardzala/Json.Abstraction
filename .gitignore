@@ -1,0 +1,10 @@
+### General ###
+*.suo
+*.user
+.vs
+
+### Build ###
+Source/**/obj/
+Source/**/bin/
+Test/**/obj/
+Test/**/bin/
