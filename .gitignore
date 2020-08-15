@@ -2,6 +2,7 @@
 *.suo
 *.user
 .vs
+.vscode
 
 ### Build ###
 Source/**/obj/
