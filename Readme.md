@@ -17,6 +17,7 @@ Abstraction conversion functionalities for the .NET System.Text.Json library.
     - [Includes:](#includes)
   - [Table of content](#table-of-content)
   - [Installation](#installation)
+    - [NuGet](#nuget)
   - [Configuration](#configuration)
     - [JsonSerializerOptions setup](#jsonserializeroptions-setup)
     - [MVC AddJsonOptions](#mvc-addjsonoptions)
@@ -26,7 +27,9 @@ Abstraction conversion functionalities for the .NET System.Text.Json library.
 
 ## Installation
 
-///////////
+### NuGet
+
+https://www.nuget.org/packages/Json.Abstraction/
 
 ## Configuration
 
