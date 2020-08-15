@@ -3,7 +3,7 @@
 Abstraction conversion functionalities for the .NET System.Text.Json library.
 
 ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Json.Abstraction)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.txt)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](License)
 
 ### Includes:
 - Support for deleted polymorphism in System.Text.Json;
