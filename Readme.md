@@ -36,9 +36,12 @@ https://www.nuget.org/packages/Json.Abstraction/
 
 ## Configuration
 
-To initialize the abstraction converter factory, the only thing to configure is to add the JsonAbstractionConverter instancs to a System.Text.Json JsonSerializerOptions. Same as the JsonStringEnumConverter.
+To initialize the abstraction convertion, you need to add a JsonAbstractionConverter factory to a System.Text.Json JsonSerializerOptions.
+It's a similar process to configuring the JsonStringEnumConverter.
 
 ### JsonSerializerOptions setup
+
+When providing serializer options to JsonSerializer:
 
 ```csharp
 using Json.Abstraction;
@@ -52,6 +55,8 @@ new JsonSerializerOptions
 ```
 
 ### MVC AddJsonOptions
+
+Or when configuring MVC app:
 
 [when configuring services]
 ```csharp
@@ -68,10 +73,11 @@ services.AddControllers().AddJsonOptions(opts =>
 
 The interface converter tries to detect automatically an appropriate class.
 If the interface and class exists in the same assembly, there is no need to register that types convertion.
-Also there is no need to use discriminators if only there is only one class that implements the interface.
+
+Also there is no need to use discriminators if there is only one class that implements the interface.
 If there are more than one class, the converter factory tries to use AbstractionConverter with discriminators.
 
-Anyway, there is an option to register missing interface convertion types by JsonAbstractSerializer:
+However, there is still an option to register a missing types convertion by JsonAbstractSerializer:
 ```csharp
 using Json.Abstraction.Serializers;
 
@@ -83,8 +89,9 @@ JsonAbstractSerializer.RegisterInterfaceConversion<IModel, Model>();
 ## Working with abstraction convertion
 
 The abstraction converter tries to detect automatically an appropriate class.
-If the JSON data includes "_t" discriminator prameter with the class name, converter tries to locate possible class type by reflection.
-However, when the abstraction and it's class is not located in the same assembly, it's possible to register that types convertion in the global registry.
+If the JSON data includes "_t" discriminator prameter with the class name, converter tries to locate the class type by reflection.
+
+However, when the abstraction and it's class is not located in the same assembly, there is still a possibility to register that types convertion in the global registry.
 
 ```csharp
 using Json.Abstraction.Serializers;
