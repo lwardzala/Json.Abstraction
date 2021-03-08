@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Json.Abstraction.Converters
 {
@@ -20,7 +21,9 @@ namespace Json.Abstraction.Converters
         {
             writer.WriteStartObject();
 
-            value.GetType().GetProperties().ToList().ForEach(property =>
+            value.GetType().GetProperties()
+                .Where(x => !Attribute.IsDefined(x, typeof(JsonIgnoreAttribute)))
+                .ToList().ForEach(property =>
             {
                 var propertyJsonName = options.PropertyNamingPolicy.ConvertName(property.Name);
                 var propertyValue = value.GetType().GetProperty(property.Name)?.GetValue(value);
