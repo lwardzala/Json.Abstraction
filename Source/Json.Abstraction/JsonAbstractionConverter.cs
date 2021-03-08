@@ -13,6 +13,7 @@ namespace Json.Abstraction
         Abstraction,
         Interface,
         Object,
+        ByteArray,
         Other
     }
 
@@ -42,13 +43,15 @@ namespace Json.Abstraction
             {
                 case SerializableType.Interface:
                     var baseType = JsonAbstractSerializer.GetInterfaceType(typeToConvert);
-                    var typeParams = new [] { typeToConvert, baseType };
+                    var typeParams = new[] { typeToConvert, baseType };
 
                     return (JsonConverter)Activator.CreateInstance(typeof(InterfaceConverter<,>).MakeGenericType(typeParams));
                 case SerializableType.Abstraction:
                     return (JsonConverter)Activator.CreateInstance(typeof(AbstractionConverter<>).MakeGenericType(typeToConvert));
                 case SerializableType.Object:
                     return new ObjectConverter();
+                case SerializableType.ByteArray:
+                    return new ByteArrayConverter();
                 default:
                     throw new Exception($"Unsupported serialization type of {typeToConvert.Name}");
             }
@@ -69,6 +72,8 @@ namespace Json.Abstraction
             }
 
             if (typeToConvert.IsAbstract) return SerializableType.Abstraction;
+
+            if (typeToConvert == typeof(byte[])) return SerializableType.ByteArray;
 
             return SerializableType.Other;
         }

@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Json.Abstraction.Tests.Mocks;
 using Json.Abstraction.Tests.Mocks.Models.Mixed;
+using System.Linq;
 
 namespace Json.Abstraction.Tests
 {
@@ -49,6 +50,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(455, result.UShort);
             Assert.AreEqual(UInt32.Parse("45545545"), result.UInt);
             Assert.AreEqual(UInt64.Parse("747474757575"), result.ULong);
+            Assert.IsTrue(Convert.FromBase64String("dGVzdA==").SequenceEqual(result.ByteArray));
         }
 
         [TestMethod]
@@ -72,6 +74,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(3, result.Short);
             Assert.AreEqual(-456, result.Int);
             Assert.AreEqual(467585, result.Long);
+            Assert.IsTrue(Convert.FromBase64String("dGVzdA==").SequenceEqual(result.ByteArray));
         }
 
         [TestMethod]

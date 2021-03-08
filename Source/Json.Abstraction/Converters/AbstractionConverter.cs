@@ -114,6 +114,7 @@ namespace Json.Abstraction.Converters
             if (valueType == typeof(decimal)) return jsonElement.GetDecimal();
             if (valueType == typeof(double)) return jsonElement.GetDouble();
             if (valueType == typeof(float)) return jsonElement.GetSingle();
+            if (valueType == typeof(byte[])) return jsonElement.GetBytesFromBase64();
             if (valueType.IsEnum)
             {
                 var enumConverter = options.Converters.FirstOrDefault(_ => _ is JsonStringEnumConverter);

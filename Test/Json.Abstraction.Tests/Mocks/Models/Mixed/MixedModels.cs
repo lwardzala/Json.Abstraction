@@ -51,6 +51,7 @@ namespace Json.Abstraction.Tests.Mocks.Models.Mixed
         public ushort UShort { get; set; }
         public uint UInt { get; set; }
         public ulong ULong { get; set; }
+        public byte[] ByteArray { get; set; }
     }
 
     public class RawModel
@@ -66,6 +67,7 @@ namespace Json.Abstraction.Tests.Mocks.Models.Mixed
         public short Short { get; set; }
         public int Int { get; set; }
         public long Long { get; set; }
+        public byte[] ByteArray { get; set; }
     }
 
     public interface IInterface
