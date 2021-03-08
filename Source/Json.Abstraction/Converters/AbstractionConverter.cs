@@ -29,7 +29,9 @@ namespace Json.Abstraction.Converters
 
             writer.WriteString(_discriminatorPropertyName, value.GetType().Name);
 
-            value.GetType().GetProperties().ToList().ForEach(property =>
+            value.GetType().GetProperties()
+                .Where(x => !Attribute.IsDefined(x, typeof(JsonIgnoreAttribute)))
+                .ToList().ForEach(property =>
             {
                 var propertyJsonName = options.PropertyNamingPolicy.ConvertName(property.Name);
                 var propertyValue = value.GetType().GetProperty(property.Name)?.GetValue(value);
@@ -59,7 +61,9 @@ namespace Json.Abstraction.Converters
         {
             var instance = Activator.CreateInstance(type);
 
-            type.GetProperties().ToList().ForEach(property =>
+            type.GetProperties()
+                .Where(x => !Attribute.IsDefined(x, typeof(JsonIgnoreAttribute)))
+                .ToList().ForEach(property =>
             {
                 var jsonPropertyName = options.PropertyNamingPolicy.ConvertName(property.Name);
                 if (jsonElement.TryGetProperty(jsonPropertyName, out var jsonProperty))
