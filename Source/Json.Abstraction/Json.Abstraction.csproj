@@ -13,6 +13,7 @@
     <Summary>Abstraction convertion functionalities and polymorphism for System.Text.Json</Summary>
     <Title>Json.Abstraction</Title>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

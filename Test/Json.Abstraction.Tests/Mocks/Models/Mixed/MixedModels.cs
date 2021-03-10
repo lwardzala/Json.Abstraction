@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Json.Abstraction.Tests.Mocks.Models.Mixed
 {
@@ -44,6 +45,8 @@ namespace Json.Abstraction.Tests.Mocks.Models.Mixed
         public bool Boolean { get; set; }
         public decimal Decimal { get; set; }
         public double Double { get; set; }
+        [JsonIgnore]
+        public double DoubleToIgnore { get; set; }
         public float Float { get; set; }
         public short Short { get; set; }
         public int Int { get; set; }
@@ -51,6 +54,7 @@ namespace Json.Abstraction.Tests.Mocks.Models.Mixed
         public ushort UShort { get; set; }
         public uint UInt { get; set; }
         public ulong ULong { get; set; }
+        public byte[] ByteArray { get; set; }
     }
 
     public class RawModel
@@ -62,10 +66,13 @@ namespace Json.Abstraction.Tests.Mocks.Models.Mixed
         public bool Boolean { get; set; }
         public decimal Decimal { get; set; }
         public double Double { get; set; }
+        [JsonIgnore]
+        public double? DoubleToIgnore { get; set; }
         public float Float { get; set; }
         public short Short { get; set; }
         public int Int { get; set; }
         public long Long { get; set; }
+        public byte[] ByteArray { get; set; }
     }
 
     public interface IInterface

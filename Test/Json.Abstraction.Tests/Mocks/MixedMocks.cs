@@ -61,6 +61,7 @@ namespace Json.Abstraction.Tests.Mocks
                     ""uShort"": 455,
                     ""uInt"": 45545545,
                     ""uLong"": 747474757575,
+                    ""byteArray"": ""dGVzdA=="",
                     ""param1"": 0
                 }",
                 new NestedModelAllBaseTypes
@@ -73,6 +74,7 @@ namespace Json.Abstraction.Tests.Mocks
                     Boolean = true,
                     Decimal = 10,
                     Double = 2.456,
+                    DoubleToIgnore = 2.888,
                     Float = 45.35665F,
                     Short = 3,
                     Int = -456,
@@ -80,6 +82,7 @@ namespace Json.Abstraction.Tests.Mocks
                     UShort = 455,
                     UInt = 45545545,
                     ULong = 747474757575,
+                    ByteArray = Convert.FromBase64String("dGVzdA=="),
                     Param1 = 0
                 },
                 typeof(NestedModelBase));
@@ -99,7 +102,8 @@ namespace Json.Abstraction.Tests.Mocks
                     ""float"": 45.35665,
                     ""short"": 3,
                     ""int"": -456,
-                    ""long"": 467585
+                    ""long"": 467585,
+                    ""byteArray"": ""dGVzdA==""
                 }",
                 new RawModel
                 {
@@ -110,10 +114,12 @@ namespace Json.Abstraction.Tests.Mocks
                     Boolean = true,
                     Decimal = 10,
                     Double = 2.456,
+                    DoubleToIgnore = 2.888,
                     Float = 45.35665F,
                     Short = 3,
                     Int = -456,
-                    Long = 467585
+                    Long = 467585,
+                    ByteArray = Convert.FromBase64String("dGVzdA==")
                 },
                 typeof(RawModel));
         }
