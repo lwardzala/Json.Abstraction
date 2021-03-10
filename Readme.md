@@ -26,6 +26,7 @@ Abstraction conversion functionalities for the .NET System.Text.Json library.
     - [MVC AddJsonOptions](#mvc-addjsonoptions)
   - [Working with interface convertion](#working-with-interface-convertion)
   - [Working with abstraction convertion](#working-with-abstraction-convertion)
+  - [Changelog](#changelog)
   - [Authors](#authors)
 
 ## Installation
@@ -148,6 +149,9 @@ is going to produce:
 ```
 
 Abstraction converter works both with abstract classes and interfaces.
+
+## Changelog
+https://github.com/lwardzala/Json.Abstraction/blob/master/Changelog.md
 
 ## Authors
 - Lukasz Wardzala - [github](https://github.com/lwardzala)
