@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Lukasz Wardzala (https://github.com/lwardzala)</Authors>
     <Description>Abstraction convertion functionalities and polymorphism for System.Text.Json</Description>
     <Copyright>Copyright (c) 2020 Lukasz Wardzala</Copyright>
@@ -13,6 +13,7 @@
     <Summary>Abstraction convertion functionalities and polymorphism for System.Text.Json</Summary>
     <Title>Json.Abstraction</Title>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

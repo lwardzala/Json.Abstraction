@@ -67,7 +67,7 @@ namespace Json.Abstraction.Tests.Mocks.Models.Mixed
         public decimal Decimal { get; set; }
         public double Double { get; set; }
         [JsonIgnore]
-        public double DoubleToIgnore { get; set; }
+        public double? DoubleToIgnore { get; set; }
         public float Float { get; set; }
         public short Short { get; set; }
         public int Int { get; set; }

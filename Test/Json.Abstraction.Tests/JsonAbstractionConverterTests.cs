@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 using Json.Abstraction.Tests.Mocks.Models.Abstraction;
 
 namespace Json.Abstraction.Tests
 {
-    [TestClass]
     public class JsonAbstractionConverterTests
     {
-        [TestMethod]
+        [Test]
         public void CanConvert_BaseTypes_ShouldNotConvert()
         {
             var converter = new JsonAbstractionConverter();
@@ -19,7 +18,7 @@ namespace Json.Abstraction.Tests
             Assert.IsFalse(converter.CanConvert(typeof(IList<string>)));
         }
 
-        [TestMethod]
+        [Test]
         public void CanConvert_ConvertibleTypes_ShouldNotConvert()
         {
             var converter = new JsonAbstractionConverter();
@@ -28,7 +27,7 @@ namespace Json.Abstraction.Tests
             Assert.IsFalse(converter.CanConvert(typeof(List<INested>)));
         }
 
-        [TestMethod]
+        [Test]
         public void CanConvert_InterfaceType_ShouldConvert()
         {
             var converter = new JsonAbstractionConverter();

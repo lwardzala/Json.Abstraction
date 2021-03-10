@@ -1,21 +1,20 @@
 ﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 using Json.Abstraction.Extensions;
 
 namespace Json.Abstraction.Tests
 {
-    [TestClass]
     public class TypeExtensionsTests
     {
-        [TestMethod]
+        [Test]
         public void IsDictionary()
         {
             Assert.IsTrue(typeof(IDictionary<object, object>).IsDictionary());
             Assert.IsTrue(typeof(Dictionary<object, object>).IsDictionary());
         }
 
-        [TestMethod]
+        [Test]
         public void IsGenericEnumerable()
         {
             Assert.IsTrue(typeof(IEnumerable<object>).IsGenericEnumerable());

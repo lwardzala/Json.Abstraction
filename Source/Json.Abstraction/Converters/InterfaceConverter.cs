@@ -25,7 +25,7 @@ namespace Json.Abstraction.Converters
                 .Where(x => !Attribute.IsDefined(x, typeof(JsonIgnoreAttribute)))
                 .ToList().ForEach(property =>
             {
-                var propertyJsonName = options.PropertyNamingPolicy.ConvertName(property.Name);
+                var propertyJsonName = ConvertPropertyName(options, property.Name);
                 var propertyValue = value.GetType().GetProperty(property.Name)?.GetValue(value);
 
                 if (propertyValue != null || !options.IgnoreNullValues)
