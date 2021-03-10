@@ -33,7 +33,7 @@ namespace Json.Abstraction.Converters
                 .Where(x => !Attribute.IsDefined(x, typeof(JsonIgnoreAttribute)))
                 .ToList().ForEach(property =>
             {
-                var propertyJsonName = options.PropertyNamingPolicy.ConvertName(property.Name);
+                var propertyJsonName = ConvertPropertyName(options, property.Name);
                 var propertyValue = value.GetType().GetProperty(property.Name)?.GetValue(value);
 
                 if (propertyValue != null || !options.IgnoreNullValues)
@@ -65,7 +65,7 @@ namespace Json.Abstraction.Converters
                 .Where(x => !Attribute.IsDefined(x, typeof(JsonIgnoreAttribute)))
                 .ToList().ForEach(property =>
             {
-                var jsonPropertyName = options.PropertyNamingPolicy.ConvertName(property.Name);
+                var jsonPropertyName = ConvertPropertyName(options, property.Name);
                 if (jsonElement.TryGetProperty(jsonPropertyName, out var jsonProperty))
                 {
                     try
@@ -143,7 +143,10 @@ namespace Json.Abstraction.Converters
                 {
                     if (!objectEnumerator.Current.Equals(default(JsonProperty)))
                     {
-                        dictionary.Add(objectEnumerator.Current.Name, GetValue(genericTypes[1], objectEnumerator.Current.Value, options));
+                        dictionary.Add(
+                            ConvertDictionaryKey(options, objectEnumerator.Current.Name),
+                            GetValue(genericTypes[1], objectEnumerator.Current.Value, options)
+                        );
                     }
                 }
                 while (objectEnumerator.MoveNext());

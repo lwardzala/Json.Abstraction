@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 using Json.Abstraction.Tests.Mocks;
 using Json.Abstraction.Tests.Mocks.Models.Abstraction;
 
 namespace Json.Abstraction.Tests
 {
-    [TestClass]
     public class AbstractionConverterTests : TestBase
     {
-        [TestMethod]
+        [Test]
         public void AbstractionDeserialize_ListOfStrings()
         {
             var mock = AbstractionMocks.GetListOfStringsMock();
@@ -17,14 +16,14 @@ namespace Json.Abstraction.Tests
             var result = DeserializeJson<ListOfStrings>(mock.JsonData, mock.AbstractType);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ListOfStrings));
+            Assert.IsInstanceOf<ListOfStrings>(result, "Wrong instance");
             Assert.AreEqual("Test", result.Param1);
             Assert.IsTrue(result.Collection.Count == 2);
             Assert.AreEqual("opt1", result.Collection[0]);
             Assert.AreEqual("opt2", result.Collection[1]);
         }
 
-        [TestMethod]
+        [Test]
         public void AbstractionDeserialize_ArrayOfStrings()
         {
             var mock = AbstractionMocks.GetArrayOfStringsMock();
@@ -32,14 +31,14 @@ namespace Json.Abstraction.Tests
             var result = DeserializeJson<ArrayOfStrings>(mock.JsonData, mock.AbstractType);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ArrayOfStrings));
+            Assert.IsInstanceOf<ArrayOfStrings>(result, "Wrong instance");
             Assert.AreEqual("Test", result.Param1);
             Assert.IsTrue(result.Collection.Length == 2);
             Assert.AreEqual("opt1", result.Collection[0]);
             Assert.AreEqual("opt2", result.Collection[1]);
         }
 
-        [TestMethod]
+        [Test]
         public void AbstractionDeserialize_ListOfObjects()
         {
             var mock = AbstractionMocks.GetListOfObjectsMock();
@@ -47,15 +46,15 @@ namespace Json.Abstraction.Tests
             var result = DeserializeJson<ListOfObjects>(mock.JsonData, mock.AbstractType);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ListOfObjects));
+            Assert.IsInstanceOf<ListOfObjects>(result, "Wrong instance");
             Assert.AreEqual("Test", result.Param1);
             Assert.IsTrue(result.Collection.Count == 2);
-            Assert.IsInstanceOfType(result.Collection, typeof(List<Nested>));
+            Assert.IsInstanceOf<List<Nested>>(result.Collection, "Wrong instance");
             Assert.AreEqual(3, result.Collection[0].Param1);
             Assert.AreEqual(4, result.Collection[1].Param1);
         }
 
-        [TestMethod]
+        [Test]
         public void AbstractionDeserialize_ArrayOfObjects()
         {
             var mock = AbstractionMocks.GetArrayOfObjectsMock();
@@ -63,15 +62,15 @@ namespace Json.Abstraction.Tests
             var result = DeserializeJson<ArrayOfObjects>(mock.JsonData, mock.AbstractType);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ArrayOfObjects));
+            Assert.IsInstanceOf<ArrayOfObjects>(result, "Wrong instance");
             Assert.AreEqual("Test", result.Param1);
             Assert.IsTrue(result.Collection.Length == 2);
-            Assert.IsInstanceOfType(result.Collection, typeof(Nested[]));
+            Assert.IsInstanceOf<Nested[]>(result.Collection, "Wrong instance");
             Assert.AreEqual(3, result.Collection[0].Param1);
             Assert.AreEqual(4, result.Collection[1].Param1);
         }
 
-        [TestMethod]
+        [Test]
         public void AbstractionDeserialize_ListOfAbstractions()
         {
             var mock = AbstractionMocks.GetListOfAbstractionsMock();
@@ -79,15 +78,15 @@ namespace Json.Abstraction.Tests
             var result = DeserializeJson<ListOfAbstractions>(mock.JsonData, mock.AbstractType);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ListOfAbstractions));
+            Assert.IsInstanceOf<ListOfAbstractions>(result, "Wrong instance");
             Assert.AreEqual("Test", result.Param1);
             Assert.IsTrue(result.Collection.Count == 2);
-            Assert.IsInstanceOfType(result.Collection, typeof(List<NestedBase>));
+            Assert.IsInstanceOf<List<NestedBase>>(result.Collection, "Wrong instance");
             Assert.AreEqual(3, result.Collection[0].Param1);
             Assert.AreEqual(4, result.Collection[1].Param1);
         }
 
-        [TestMethod]
+        [Test]
         public void AbstractionDeserialize_ListOfInterfaces()
         {
             var mock = AbstractionMocks.GetListOfInterfacesMock();
@@ -95,15 +94,15 @@ namespace Json.Abstraction.Tests
             var result = DeserializeJson<ListOfInterfaces>(mock.JsonData, mock.AbstractType);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ListOfInterfaces));
+            Assert.IsInstanceOf<ListOfInterfaces>(result, "Wrong instance");
             Assert.AreEqual("Test", result.Param1);
             Assert.IsTrue(result.Collection.Count == 2);
-            Assert.IsInstanceOfType(result.Collection, typeof(List<INested>));
+            Assert.IsInstanceOf<List<INested>>(result.Collection, "Wrong instance");
             Assert.AreEqual(3, result.Collection[0].Param1);
             Assert.AreEqual(4, result.Collection[1].Param1);
         }
 
-        [TestMethod]
+        [Test]
         public void AbstractionDeserialize_IListOfInterfaces()
         {
             var mock = AbstractionMocks.GetIListOfInterfacesMock();
@@ -111,15 +110,15 @@ namespace Json.Abstraction.Tests
             var result = DeserializeJson<IListOfInterfaces>(mock.JsonData, mock.AbstractType);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(IListOfInterfaces));
+            Assert.IsInstanceOf<IListOfInterfaces>(result, "Wrong instance");
             Assert.AreEqual("Test", result.Param1);
             Assert.IsTrue(result.Collection.Count == 2);
-            Assert.IsInstanceOfType(result.Collection, typeof(IList<INested>));
+            Assert.IsInstanceOf<IList<INested>>(result.Collection, "Wrong instance");
             Assert.AreEqual(3, result.Collection[0].Param1);
             Assert.AreEqual(4, result.Collection[1].Param1);
         }
 
-        [TestMethod]
+        [Test]
         public void AbstractionSerialize_ListOfStrings()
         {
             var mock = AbstractionMocks.GetListOfStringsMock();
@@ -130,7 +129,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
         }
 
-        [TestMethod]
+        [Test]
         public void AbstractionSerialize_ArrayOfStrings()
         {
             var mock = AbstractionMocks.GetArrayOfStringsMock();
@@ -141,7 +140,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
         }
 
-        [TestMethod]
+        [Test]
         public void AbstractionSerialize_ListOfObjects()
         {
             var mock = AbstractionMocks.GetListOfObjectsMock();
@@ -152,7 +151,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
         }
 
-        [TestMethod]
+        [Test]
         public void AbstractionSerialize_ArrayOfObjects()
         {
             var mock = AbstractionMocks.GetArrayOfObjectsMock();
@@ -163,7 +162,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
         }
 
-        [TestMethod]
+        [Test]
         public void AbstractionSerialize_ListOfAbstractions()
         {
             var mock = AbstractionMocks.GetListOfAbstractionsMock();
@@ -174,7 +173,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
         }
 
-        [TestMethod]
+        [Test]
         public void AbstractionSerialize_ListOfInterfaces()
         {
             var mock = AbstractionMocks.GetListOfInterfacesMock();
@@ -185,7 +184,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
         }
 
-        [TestMethod]
+        [Test]
         public void AbstractionSerialize_IListOfInterfaces()
         {
             var mock = AbstractionMocks.GetIListOfInterfacesMock();

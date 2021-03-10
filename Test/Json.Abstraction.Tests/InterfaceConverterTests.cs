@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 using Json.Abstraction.Tests.Mocks;
 using Json.Abstraction.Tests.Mocks.Models.Objects;
@@ -7,10 +7,9 @@ using Json.Abstraction.Tests.Mocks.Models.Collection;
 
 namespace Json.Abstraction.Tests
 {
-    [TestClass]
     public class InterfaceConverterTests : TestBase
     {
-        [TestMethod]
+        [Test]
         public void InterfaceDeserialize_ResourceWithObject()
         {
             var mock = ObjectMocks.GetResourceWithObjectMock();
@@ -18,13 +17,13 @@ namespace Json.Abstraction.Tests
             var result = DeserializeJson<ResourceWithObject>(mock.JsonData, mock.typeToConvert);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ResourceWithObject));
+            Assert.IsInstanceOf<ResourceWithObject>(result, "Wrong instance");
             Assert.AreEqual(3, result.Param1);
-            Assert.IsInstanceOfType(result.NestedObject, typeof(Nested));
+            Assert.IsInstanceOf<Nested>(result.NestedObject, "Wrong instance");
             Assert.AreEqual("Test", result.NestedObject.Param2);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceDeserialize_ObjectWithNestedObject()
         {
             var mock = ObjectMocks.GetObjectWithNestedObjectMock();
@@ -32,13 +31,13 @@ namespace Json.Abstraction.Tests
             var result = DeserializeJson<INested>(mock.JsonData, mock.typeToConvert);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(Nested));
+            Assert.IsInstanceOf<Nested>(result, "Wrong instance");
             Assert.AreEqual("Test", result.Param2);
-            Assert.IsInstanceOfType(result.NestedObject, typeof(Nested));
+            Assert.IsInstanceOf<Nested>(result.NestedObject, "Wrong instance");
             Assert.AreEqual("Test2", result.NestedObject.Param2);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceDeserialize_ResourceWithListOfInterfaces()
         {
             var mock = CollectionMocks.GetResourceWithListOfInterfacesMock();
@@ -46,14 +45,14 @@ namespace Json.Abstraction.Tests
             var result = DeserializeJson<ResourceWithListOfInterfaces>(mock.JsonData, mock.typeToConvert);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ResourceWithListOfInterfaces));
+            Assert.IsInstanceOf<ResourceWithListOfInterfaces>(result, "Wrong instance");
             Assert.IsNotNull(result.Collection);
             Assert.IsTrue(result.Collection.Count == 2);
             Assert.AreEqual("Test", result.Collection[0].Param1);
             Assert.AreEqual("Test2", result.Collection[1].Param1);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceDeserialize_ResourceWithIListOfInterfaces()
         {
             var mock = CollectionMocks.GetResourceWithIListOfInterfacesMock();
@@ -61,14 +60,14 @@ namespace Json.Abstraction.Tests
             var result = DeserializeJson<ResourceWithIListOfInterfaces>(mock.JsonData, mock.typeToConvert);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ResourceWithIListOfInterfaces));
+            Assert.IsInstanceOf<ResourceWithIListOfInterfaces>(result, "Wrong instance");
             Assert.IsNotNull(result.Collection);
             Assert.IsTrue(result.Collection.Count == 2);
             Assert.AreEqual("Test", result.Collection[0].Param1);
             Assert.AreEqual("Test2", result.Collection[1].Param1);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceDeserialize_ResourceWithArrayOfInterfaces()
         {
             var mock = CollectionMocks.GetResourceWithArrayOfInterfacesMock();
@@ -76,14 +75,14 @@ namespace Json.Abstraction.Tests
             var result = DeserializeJson<ResourceWithArrayOfInterfaces>(mock.JsonData, mock.typeToConvert);
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(ResourceWithArrayOfInterfaces));
+            Assert.IsInstanceOf<ResourceWithArrayOfInterfaces>(result, "Wrong instance");
             Assert.IsNotNull(result.Collection);
             Assert.IsTrue(result.Collection.Length == 2);
             Assert.AreEqual("Test", result.Collection[0].Param1);
             Assert.AreEqual("Test2", result.Collection[1].Param1);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceDeserialize_ListOfInterfaces()
         {
             var mock = CollectionMocks.GetListOfInterfacesMock();
@@ -96,7 +95,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual("Test2", result[1].Param1);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceDeserialize_IListOfInterfaces()
         {
             var mock = CollectionMocks.GetIListOfInterfacesMock();
@@ -109,7 +108,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual("Test2", result[1].Param1);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceDeserialize_ArrayOfInterfaces()
         {
             var mock = CollectionMocks.GetArrayOfInterfacesMock();
@@ -122,7 +121,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual("Test2", result[1].Param1);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceDeserialize_IEnumerableOfInterfaces()
         {
             var mock = CollectionMocks.GetIEnumerableOfInterfacesMock();
@@ -135,7 +134,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual("Test2", result[1].Param1);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceSerialize_ResourceWithObject()
         {
             var mock = ObjectMocks.GetResourceWithObjectMock();
@@ -146,7 +145,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceSerialize_ObjectWithNestedObject()
         {
             var mock = ObjectMocks.GetObjectWithNestedObjectMock();
@@ -157,7 +156,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceSerialize_ResourceWithListOfInterfaces()
         {
             var mock = CollectionMocks.GetResourceWithListOfInterfacesMock();
@@ -168,7 +167,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceSerialize_ResourceWithIListOfInterfaces()
         {
             var mock = CollectionMocks.GetResourceWithIListOfInterfacesMock();
@@ -179,7 +178,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceSerialize_ResourceWithArrayOfInterfaces()
         {
             var mock = CollectionMocks.GetResourceWithArrayOfInterfacesMock();
@@ -190,7 +189,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceSerialize_ListOfInterfaces()
         {
             var mock = CollectionMocks.GetListOfInterfacesMock();
@@ -201,7 +200,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceSerialize_IListOfInterfaces()
         {
             var mock = CollectionMocks.GetIListOfInterfacesMock();
@@ -212,7 +211,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceSerialize_ArrayOfInterfaces()
         {
             var mock = CollectionMocks.GetArrayOfInterfacesMock();
@@ -223,7 +222,7 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
         }
 
-        [TestMethod]
+        [Test]
         public void InterfaceSerialize_IEnumerableOfInterfaces()
         {
             var mock = CollectionMocks.GetIEnumerableOfInterfacesMock();
