@@ -17,26 +17,48 @@ namespace Json.Abstraction.Tests.Mocks
                         ""_t"": ""NestedModel"",
                         ""model"": {
                             ""param1"": ""Test2"",
-                            ""dateTime"": ""2020-08-12T19:35:00""
+                            ""dateTime"": ""2020-08-12T19:35:00"",
+                            ""byteArray"": ""dGVzdA=="",
+                            ""doubleToNeverIgnore1"": 22.22,
+                            ""doubleToNeverIgnore2"": 0,
+                            ""doubleToIgnoreWhenWritingDefault2"": 10
                         },
                         ""dateTime"": ""2020-08-12T19:35:00"",
                         ""param1"": 3
-                    }
+                    },
+                    ""byteArray"": ""dGVzdA=="",
+                    ""doubleToNeverIgnore1"": 22.22,
+                    ""doubleToNeverIgnore2"": 0,
+                    ""doubleToIgnoreWhenWritingDefault2"": 10
                 }",
                 new Model
                 {
                     Param1 = "Test",
                     DateTime = DateTime.Parse("2020-08-12T19:35:00"),
+                    ByteArray = Convert.FromBase64String("dGVzdA=="),
                     NestedModel = new NestedModel
                     {
                         Param1 = 3,
                         Model = new Model
                         {
                             Param1 = "Test2",
-                            DateTime = DateTime.Parse("2020-08-12T19:35:00")
+                            DateTime = DateTime.Parse("2020-08-12T19:35:00"),
+                            ByteArray = Convert.FromBase64String("dGVzdA=="),
+                            DoubleToAlwaysIgnore = 11.11,
+                            DoubleToNeverIgnore1 = 22.22,
+                            DoubleToNeverIgnore2 = 0,
+                            DoubleToIgnoreWhenWritingDefault1 = default,
+                            DoubleToIgnoreWhenWritingDefault2 = 10,
+                            DoubleToIgnoreWhenWritingNull = null,
                         },
                         DateTime = DateTime.Parse("2020-08-12T19:35:00")
-                    }
+                    },
+                    DoubleToAlwaysIgnore = 11.11,
+                    DoubleToNeverIgnore1 = 22.22,
+                    DoubleToNeverIgnore2 = 0,
+                    DoubleToIgnoreWhenWritingDefault1 = default,
+                    DoubleToIgnoreWhenWritingDefault2 = 10,
+                    DoubleToIgnoreWhenWritingNull = null
                 },
                 typeof(IModel));
         }
@@ -74,7 +96,6 @@ namespace Json.Abstraction.Tests.Mocks
                     Boolean = true,
                     Decimal = 10,
                     Double = 2.456,
-                    DoubleToIgnore = 2.888,
                     Float = 45.35665F,
                     Short = 3,
                     Int = -456,
@@ -99,6 +120,9 @@ namespace Json.Abstraction.Tests.Mocks
                     ""boolean"": true,
                     ""decimal"": 10,
                     ""double"": 2.456,
+                    ""doubleToNeverIgnore1"": 22.22,
+                    ""doubleToNeverIgnore2"": 0,
+                    ""doubleToIgnoreWhenWritingDefault2"": 10,
                     ""float"": 45.35665,
                     ""short"": 3,
                     ""int"": -456,
@@ -114,7 +138,12 @@ namespace Json.Abstraction.Tests.Mocks
                     Boolean = true,
                     Decimal = 10,
                     Double = 2.456,
-                    DoubleToIgnore = 2.888,
+                    DoubleToAlwaysIgnore = 11.11,
+                    DoubleToNeverIgnore1 = 22.22,
+                    DoubleToNeverIgnore2 = 0,
+                    DoubleToIgnoreWhenWritingDefault1 = default,
+                    DoubleToIgnoreWhenWritingDefault2 = 10,
+                    DoubleToIgnoreWhenWritingNull = null,
                     Float = 45.35665F,
                     Short = 3,
                     Int = -456,

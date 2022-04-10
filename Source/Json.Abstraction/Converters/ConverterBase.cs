@@ -1,5 +1,8 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Reflection;
+using System.Text.Json;
 using System.Text.Json.Serialization;
+using Json.Abstraction.Extensions;
 
 namespace Json.Abstraction.Converters
 {
@@ -38,6 +41,17 @@ namespace Json.Abstraction.Converters
                 default:
                     return null;
             }
+        }
+
+        protected static bool GetIgnoreProperty(JsonSerializerOptions options, PropertyInfo property, object propertyValue)
+        {
+            var ignoredAttribute = Attribute.GetCustomAttribute(property, typeof(JsonIgnoreAttribute)) as JsonIgnoreAttribute;
+            var ignoreCondition = ignoredAttribute?.Condition ?? options.DefaultIgnoreCondition;
+
+            return
+                ignoreCondition == JsonIgnoreCondition.Always ||
+                (ignoreCondition == JsonIgnoreCondition.WhenWritingDefault && property.PropertyType.GetDefault() == propertyValue) ||
+                (ignoreCondition == JsonIgnoreCondition.WhenWritingNull || options.IgnoreNullValues) && propertyValue == null;
         }
     }
 }

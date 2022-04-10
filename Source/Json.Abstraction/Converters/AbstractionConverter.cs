@@ -30,13 +30,14 @@ namespace Json.Abstraction.Converters
             writer.WriteString(_discriminatorPropertyName, value.GetType().Name);
 
             value.GetType().GetProperties()
-                .Where(x => !Attribute.IsDefined(x, typeof(JsonIgnoreAttribute)))
                 .ToList().ForEach(property =>
             {
                 var propertyJsonName = ConvertPropertyName(options, property.Name);
-                var propertyValue = value.GetType().GetProperty(property.Name)?.GetValue(value);
+                var propertyValue = property?.GetValue(value);
 
-                if (propertyValue != null || !options.IgnoreNullValues)
+                bool ignore = GetIgnoreProperty(options, property, propertyValue);
+
+                if (!ignore)
                 {
                     writer.WritePropertyName(propertyJsonName);
                     JsonSerializer.Serialize(writer, propertyValue, property.PropertyType, options);
@@ -62,7 +63,6 @@ namespace Json.Abstraction.Converters
             var instance = Activator.CreateInstance(type);
 
             type.GetProperties()
-                .Where(x => !Attribute.IsDefined(x, typeof(JsonIgnoreAttribute)))
                 .ToList().ForEach(property =>
             {
                 var jsonPropertyName = ConvertPropertyName(options, property.Name);
@@ -70,7 +70,14 @@ namespace Json.Abstraction.Converters
                 {
                     try
                     {
-                        type.GetProperty(property.Name)?.SetValue(instance, GetValue(property.PropertyType, jsonProperty, options));
+                        var propertyValue = GetValue(property.PropertyType, jsonProperty, options);
+
+                        bool ignore = GetIgnoreProperty(options, property, propertyValue);
+
+                        if (!ignore)
+                        {
+                            type.GetProperty(property.Name)?.SetValue(instance, propertyValue);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -105,20 +112,24 @@ namespace Json.Abstraction.Converters
 
         private object GetValue(Type valueType, JsonElement jsonElement, JsonSerializerOptions options)
         {
-            if (valueType == typeof(Guid)) return jsonElement.GetGuid();
-            if (valueType == typeof(DateTime)) return jsonElement.GetDateTime();
-            if (valueType == typeof(string)) return jsonElement.GetString();
-            if (valueType == typeof(bool)) return jsonElement.GetBoolean();
-            if (valueType == typeof(short)) return jsonElement.GetInt16();
-            if (valueType == typeof(int)) return jsonElement.GetInt32();
-            if (valueType == typeof(long)) return jsonElement.GetInt64();
-            if (valueType == typeof(ushort)) return jsonElement.GetUInt16();
-            if (valueType == typeof(uint)) return jsonElement.GetUInt32();
-            if (valueType == typeof(ulong)) return jsonElement.GetUInt64();
-            if (valueType == typeof(decimal)) return jsonElement.GetDecimal();
-            if (valueType == typeof(double)) return jsonElement.GetDouble();
-            if (valueType == typeof(float)) return jsonElement.GetSingle();
-            if (valueType == typeof(byte[])) return jsonElement.GetBytesFromBase64();
+            if (jsonElement.ValueKind == JsonValueKind.Null) return null;
+
+            if (valueType == typeof(Guid) || valueType == typeof(Guid?)) return jsonElement.GetGuid();
+            if (valueType == typeof(DateTime) || valueType == typeof(DateTime?)) return jsonElement.GetDateTime();
+            // TODO: When .net6
+            if (valueType == typeof(string) /*|| valueType == typeof(string?)*/) return jsonElement.GetString();
+            if (valueType == typeof(bool) || valueType == typeof(bool?)) return jsonElement.GetBoolean();
+            if (valueType == typeof(short) || valueType == typeof(short?)) return jsonElement.GetInt16();
+            if (valueType == typeof(int) || valueType == typeof(int?)) return jsonElement.GetInt32();
+            if (valueType == typeof(long) || valueType == typeof(long?)) return jsonElement.GetInt64();
+            if (valueType == typeof(ushort) || valueType == typeof(ushort?)) return jsonElement.GetUInt16();
+            if (valueType == typeof(uint) || valueType == typeof(uint?)) return jsonElement.GetUInt32();
+            if (valueType == typeof(ulong) || valueType == typeof(ulong?)) return jsonElement.GetUInt64();
+            if (valueType == typeof(decimal) || valueType == typeof(decimal?)) return jsonElement.GetDecimal();
+            if (valueType == typeof(double) || valueType == typeof(double?)) return jsonElement.GetDouble();
+            if (valueType == typeof(float) || valueType == typeof(float?)) return jsonElement.GetSingle();
+            // TODO: When .net6
+            if (valueType == typeof(byte[]) /* || valueType == typeof(byte[]?) */) return jsonElement.GetBytesFromBase64();
             if (valueType.IsEnum)
             {
                 var enumConverter = options.Converters.FirstOrDefault(_ => _ is JsonStringEnumConverter);

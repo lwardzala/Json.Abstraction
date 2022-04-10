@@ -49,7 +49,7 @@ using Json.Abstraction;
 
 new JsonSerializerOptions
 {
-    IgnoreNullValues = true,
+    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     Converters = { new JsonAbstractionConverter(), new JsonStringEnumConverter() }
 };
@@ -64,7 +64,7 @@ Or when configuring MVC app:
 services.AddControllers().AddJsonOptions(opts =>
 {
     opts.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-    opts.JsonSerializerOptions.IgnoreNullValues = true;
+    opts.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
     opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     opts.JsonSerializerOptions.Converters.Add(new JsonAbstractionConverter());
 });

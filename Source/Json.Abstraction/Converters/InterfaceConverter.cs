@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Json.Abstraction.Extensions;
 
 namespace Json.Abstraction.Converters
 {
@@ -22,18 +24,19 @@ namespace Json.Abstraction.Converters
             writer.WriteStartObject();
 
             value.GetType().GetProperties()
-                .Where(x => !Attribute.IsDefined(x, typeof(JsonIgnoreAttribute)))
                 .ToList().ForEach(property =>
-            {
-                var propertyJsonName = ConvertPropertyName(options, property.Name);
-                var propertyValue = value.GetType().GetProperty(property.Name)?.GetValue(value);
-
-                if (propertyValue != null || !options.IgnoreNullValues)
                 {
-                    writer.WritePropertyName(propertyJsonName);
-                    JsonSerializer.Serialize(writer, propertyValue, property.PropertyType, options);
-                }
-            });
+                    var propertyJsonName = ConvertPropertyName(options, property.Name);
+                    var propertyValue = value.GetType().GetProperty(property.Name)?.GetValue(value);
+
+                    bool ignore = GetIgnoreProperty(options, property, propertyValue);
+
+                    if (!ignore)
+                    {
+                        writer.WritePropertyName(propertyJsonName);
+                        JsonSerializer.Serialize(writer, propertyValue, property.PropertyType, options);
+                    }
+                });
 
             writer.WriteEndObject();
         }
