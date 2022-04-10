@@ -49,5 +49,15 @@ namespace Json.Abstraction.Extensions
 
             return new Type[] { };
         }
+
+        public static object GetDefault(this Type type)
+        {
+            if (type.IsValueType)
+            {
+                return Activator.CreateInstance(type);
+            }
+            
+            return null;
+        }
     }
 }

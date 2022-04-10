@@ -4,6 +4,8 @@ using NUnit.Framework;
 using Json.Abstraction.Tests.Mocks;
 using Json.Abstraction.Tests.Mocks.Models.Mixed;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Json.Abstraction.Tests
 {
@@ -14,7 +16,9 @@ namespace Json.Abstraction.Tests
         {
             var mock = MixedMocks.GetInterfaceWithNestedAbstractMock();
 
-            var result = DeserializeJson<IModel>(mock.JsonData, mock.typeToConvert);
+            var result = DeserializeJson<IModel>(mock.JsonData);
+
+            var json = SerializeJson(mock.TestObject, mock.typeToConvert);
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<Model>(result, "Wrong instance");
@@ -22,6 +26,25 @@ namespace Json.Abstraction.Tests
             Assert.IsInstanceOf<NestedModel>(result.NestedModel, "Wrong instance");
             Assert.AreEqual(3, result.NestedModel.Param1);
             Assert.AreEqual("Test2", ((NestedModel)result.NestedModel).Model.Param1);
+
+            Assert.IsNull(result.DoubleToAlwaysIgnore);
+            Assert.AreEqual(22.22, result.DoubleToNeverIgnore1);
+            Assert.AreEqual(0, result.DoubleToNeverIgnore2);
+            Assert.IsNull(result.DoubleToIgnoreWhenWritingDefault1);
+            Assert.AreEqual(10, result.DoubleToIgnoreWhenWritingDefault2);
+            Assert.IsNull(result.DoubleToIgnoreWhenWritingNull);
+            Assert.IsNull(((NestedModel)result.NestedModel).Model.DoubleToAlwaysIgnore);
+            Assert.AreEqual(22.22, ((NestedModel)result.NestedModel).Model.DoubleToNeverIgnore1);
+            Assert.AreEqual(0, ((NestedModel)result.NestedModel).Model.DoubleToNeverIgnore2);
+            Assert.AreEqual(10, ((NestedModel)result.NestedModel).Model.DoubleToIgnoreWhenWritingDefault2);
+            Assert.IsNull(((NestedModel)result.NestedModel).Model.DoubleToIgnoreWhenWritingNull);
+
+            Assert.IsFalse(json.Contains("doubleToAlwaysIgnore", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(json.Contains("doubleToNeverIgnore1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(json.Contains("doubleToNeverIgnore2", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsFalse(json.Contains("doubleToIgnoreWhenWritingDefault1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(json.Contains("doubleToIgnoreWhenWritingDefault2", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsFalse(json.Contains("doubleToIgnoreWhenWritingNull", StringComparison.InvariantCultureIgnoreCase));
         }
 
         [Test]
@@ -47,7 +70,6 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(-456, result.Int);
             Assert.AreEqual(467585, result.Long);
             Assert.AreEqual(455, result.UShort);
-            Assert.AreEqual(default(double), result.DoubleToIgnore);
             Assert.AreEqual(UInt32.Parse("45545545"), result.UInt);
             Assert.AreEqual(UInt64.Parse("747474757575"), result.ULong);
             Assert.IsTrue(Convert.FromBase64String("dGVzdA==").SequenceEqual(result.ByteArray));
@@ -59,6 +81,8 @@ namespace Json.Abstraction.Tests
             var mock = MixedMocks.GetRawModelMock();
 
             var result = DeserializeJson<RawModel>(mock.JsonData, mock.typeToConvert);
+
+            var json = SerializeJson(mock.TestObject, mock.typeToConvert);
 
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.Dictionary);
@@ -73,9 +97,21 @@ namespace Json.Abstraction.Tests
             Assert.AreEqual(45.35665F, result.Float);
             Assert.AreEqual(3, result.Short);
             Assert.AreEqual(-456, result.Int);
-            Assert.IsNull(result.DoubleToIgnore);
+            Assert.IsNull(result.DoubleToAlwaysIgnore);
+            Assert.AreEqual(22.22, result.DoubleToNeverIgnore1);
+            Assert.AreEqual(0, result.DoubleToNeverIgnore2);
+            Assert.IsNull(result.DoubleToIgnoreWhenWritingDefault1);
+            Assert.AreEqual(10, result.DoubleToIgnoreWhenWritingDefault2);
+            Assert.IsNull(result.DoubleToIgnoreWhenWritingNull);
             Assert.AreEqual(467585, result.Long);
             Assert.IsTrue(Convert.FromBase64String("dGVzdA==").SequenceEqual(result.ByteArray));
+
+            Assert.IsFalse(json.Contains("doubleToAlwaysIgnore", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(json.Contains("doubleToNeverIgnore1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(json.Contains("doubleToNeverIgnore2", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsFalse(json.Contains("doubleToIgnoreWhenWritingDefault1", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsTrue(json.Contains("doubleToIgnoreWhenWritingDefault2", StringComparison.InvariantCultureIgnoreCase));
+            Assert.IsFalse(json.Contains("doubleToIgnoreWhenWritingNull", StringComparison.InvariantCultureIgnoreCase));
         }
 
         [Test]

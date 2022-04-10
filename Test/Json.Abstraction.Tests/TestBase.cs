@@ -9,7 +9,7 @@ namespace Json.Abstraction.Tests
     {
         protected readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions
         {
-            IgnoreNullValues = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             Converters = { new JsonStringEnumConverter(), new JsonAbstractionConverter() }
         };
