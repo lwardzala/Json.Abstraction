@@ -15,6 +15,7 @@ namespace Json.Abstraction.Tests.Mocks.Models.Mixed
         string Param1 { get; set; }
         DateTime DateTime { get; set; }
         NestedModelBase NestedModel { get; set; }
+        byte[] ByteArray { get; set; }
 
         double? DoubleToAlwaysIgnore { get; set; }
         double? DoubleToNeverIgnore1 { get; set; }
@@ -29,6 +30,7 @@ namespace Json.Abstraction.Tests.Mocks.Models.Mixed
         public string Param1 { get; set; }
         public DateTime DateTime { get; set; }
         public NestedModelBase NestedModel { get; set; }
+        public byte[] ByteArray { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
         public double? DoubleToAlwaysIgnore { get; set; }

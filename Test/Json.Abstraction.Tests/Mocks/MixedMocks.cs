@@ -18,6 +18,7 @@ namespace Json.Abstraction.Tests.Mocks
                         ""model"": {
                             ""param1"": ""Test2"",
                             ""dateTime"": ""2020-08-12T19:35:00"",
+                            ""byteArray"": ""dGVzdA=="",
                             ""doubleToNeverIgnore1"": 22.22,
                             ""doubleToNeverIgnore2"": 0,
                             ""doubleToIgnoreWhenWritingDefault2"": 10
@@ -25,6 +26,7 @@ namespace Json.Abstraction.Tests.Mocks
                         ""dateTime"": ""2020-08-12T19:35:00"",
                         ""param1"": 3
                     },
+                    ""byteArray"": ""dGVzdA=="",
                     ""doubleToNeverIgnore1"": 22.22,
                     ""doubleToNeverIgnore2"": 0,
                     ""doubleToIgnoreWhenWritingDefault2"": 10
@@ -33,6 +35,7 @@ namespace Json.Abstraction.Tests.Mocks
                 {
                     Param1 = "Test",
                     DateTime = DateTime.Parse("2020-08-12T19:35:00"),
+                    ByteArray = Convert.FromBase64String("dGVzdA=="),
                     NestedModel = new NestedModel
                     {
                         Param1 = 3,
@@ -40,6 +43,7 @@ namespace Json.Abstraction.Tests.Mocks
                         {
                             Param1 = "Test2",
                             DateTime = DateTime.Parse("2020-08-12T19:35:00"),
+                            ByteArray = Convert.FromBase64String("dGVzdA=="),
                             DoubleToAlwaysIgnore = 11.11,
                             DoubleToNeverIgnore1 = 22.22,
                             DoubleToNeverIgnore2 = 0,

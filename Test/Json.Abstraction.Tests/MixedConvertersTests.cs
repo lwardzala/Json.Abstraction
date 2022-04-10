@@ -26,6 +26,8 @@ namespace Json.Abstraction.Tests
             Assert.IsInstanceOf<NestedModel>(result.NestedModel, "Wrong instance");
             Assert.AreEqual(3, result.NestedModel.Param1);
             Assert.AreEqual("Test2", ((NestedModel)result.NestedModel).Model.Param1);
+            Assert.IsTrue(Convert.FromBase64String("dGVzdA==").SequenceEqual(result.ByteArray));
+            Assert.IsTrue(Convert.FromBase64String("dGVzdA==").SequenceEqual(((NestedModel)result.NestedModel).Model.ByteArray));
 
             Assert.IsNull(result.DoubleToAlwaysIgnore);
             Assert.AreEqual(22.22, result.DoubleToNeverIgnore1);
