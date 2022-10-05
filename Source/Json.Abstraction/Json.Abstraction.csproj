@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Authors>Lukasz Wardzala (https://github.com/lwardzala)</Authors>
     <Description>Abstraction convertion functionalities and polymorphism for System.Text.Json</Description>
-    <Copyright>Copyright (c) 2020 Lukasz Wardzala</Copyright>
+    <Copyright>Copyright (c) 2022 Lukasz Wardzala</Copyright>
     <PackageLicenseFile></PackageLicenseFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/lwardzala/Json.Abstraction</PackageProjectUrl>
@@ -13,7 +13,7 @@
     <Summary>Abstraction convertion functionalities and polymorphism for System.Text.Json</Summary>
     <Title>Json.Abstraction</Title>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.0</Version>
+    <Version>3.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
