@@ -7,8 +7,7 @@ namespace Json.Abstraction.Tests
 {
     public class ImmutableListTests : TestBase
     {
-        // TODO: support for immutable
-        /*[Test]
+        [Test]
         public void AbstractionDeserialize_ImmutableList()
         {
             var mock = ImmutableListMocks.GetResourceWithImmutableList();
@@ -19,9 +18,9 @@ namespace Json.Abstraction.Tests
             Assert.IsInstanceOf<ClassWithImmutableList>(result, "Wrong instance");
             Assert.AreEqual("Test1", result.Name);
             Assert.IsTrue(result.List.Count == 2);
-            Assert.AreEqual("Test2", result.List[0]);
-            Assert.AreEqual("Test3", result.List[1]);
-        }*/
+            Assert.AreEqual("Test2", result.List[0].Name);
+            Assert.AreEqual("Test3", result.List[1].Name);
+        }
 
         [Test]
         public void AbstractionSeserialize_ImmutableList()

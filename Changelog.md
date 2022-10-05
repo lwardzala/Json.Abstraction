@@ -1,5 +1,10 @@
 # Json.Abstraction Changelog
 
+## Release v3.0.0 (final)
+- [Feature] Migration to .NET 6;
+- [Feature] Support for non-empty constructor classes (for example records);
+- [Fix] Fix for ImmutableList;
+
 ## Release v2.0.0
 - [Feature] Migration to .NET 5;
 
