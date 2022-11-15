@@ -1,5 +1,9 @@
 # Json.Abstraction Changelog
 
+## Release v3.1.0
+- [Feature] Added discriminator property name customization;
+- [Feature] Added possibility to exclude adding discriminator form serialization;
+
 ## Release v3.0.0 (final)
 - [Feature] Migration to .NET 6;
 - [Feature] Support for non-empty constructor classes (for example records);

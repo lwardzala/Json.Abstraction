@@ -18,10 +18,52 @@ namespace Json.Abstraction
     }
 
     /// <summary>
-    /// Converts abstract types to their appropriate instances
+    /// Converts abstract types to their appropriate instances.
     /// </summary>
     public sealed class JsonAbstractionConverter : JsonConverterFactory
     {
+        /// <summary>
+        /// Indicates whether to always include discriminator property for serialized objects.
+        /// Discriminator is never set if value is <c>false</c>.
+        /// Default value is <c>true</c>.
+        /// </summary>
+        public bool? IncludeDiscriminatorProperty { get; init; }
+
+        /// <summary>
+        /// Custom discriminator property name.
+        /// </summary>
+        public string? CustomDiscriminatorPropertyName { get; init; }
+
+        /// <summary>
+        /// JsonAbstractionConverter constructor.
+        /// </summary>
+        public JsonAbstractionConverter()
+        {
+            IncludeDiscriminatorProperty = null;
+            CustomDiscriminatorPropertyName = null;
+        }
+
+        /// <summary>
+        /// JsonAbstractionConverter constructor.
+        /// </summary>
+        /// <param name="customDiscriminatorPropertyName">Custom discriminator property name.</param>
+        public JsonAbstractionConverter(string customDiscriminatorPropertyName)
+        {
+            IncludeDiscriminatorProperty = true;
+            CustomDiscriminatorPropertyName = customDiscriminatorPropertyName;
+        }
+
+        /// <summary>
+        /// JsonAbstractionConverter constructor.
+        /// </summary>
+        /// <param name="includeDiscriminatorProperty">Indicates whether to always include discriminator property for serialized objects. Discriminator is never set if value is <c>false</c>. Default value is <c>true</c>.</param>
+        /// <param name="customDiscriminatorPropertyName">Custom discriminator property name.</param>
+        public JsonAbstractionConverter(bool includeDiscriminatorProperty, string? customDiscriminatorPropertyName = null)
+        {
+            IncludeDiscriminatorProperty = includeDiscriminatorProperty;
+            CustomDiscriminatorPropertyName = customDiscriminatorPropertyName;
+        }
+
         public override bool CanConvert(Type typeToConvert)
         {
             switch (GetSerializableType(typeToConvert))
@@ -47,7 +89,7 @@ namespace Json.Abstraction
 
                     return (JsonConverter)Activator.CreateInstance(typeof(InterfaceConverter<,>).MakeGenericType(typeParams));
                 case SerializableType.Abstraction:
-                    return (JsonConverter)Activator.CreateInstance(typeof(AbstractionConverter<>).MakeGenericType(typeToConvert));
+                    return (JsonConverter)Activator.CreateInstance(typeof(AbstractionConverter<>).MakeGenericType(typeToConvert), IncludeDiscriminatorProperty ?? true, CustomDiscriminatorPropertyName ?? "_t");
                 case SerializableType.Object:
                     return new ObjectConverter();
                 case SerializableType.ByteArray:

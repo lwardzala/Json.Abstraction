@@ -14,7 +14,14 @@ namespace Json.Abstraction.Converters;
 /// <typeparam name="TAbstraction">Abstraction type</typeparam>
 public class AbstractionConverter<TAbstraction> : ConverterBase<TAbstraction>
 {
-    private readonly string _discriminatorPropertyName = "_t";
+    private readonly bool _includeDiscriminatorProperty;
+    private readonly string _discriminatorPropertyName;
+
+    public AbstractionConverter(bool? includeDiscriminatorProperty, string discriminatorPropertyName)
+    {
+        _discriminatorPropertyName = discriminatorPropertyName;
+        _includeDiscriminatorProperty = includeDiscriminatorProperty.Value;
+    }
 
     public override TAbstraction Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
@@ -25,7 +32,8 @@ public class AbstractionConverter<TAbstraction> : ConverterBase<TAbstraction>
     {
         writer.WriteStartObject();
 
-        writer.WriteString(_discriminatorPropertyName, value.GetType().Name);
+        if (_includeDiscriminatorProperty)
+            writer.WriteString(_discriminatorPropertyName, value.GetType().Name);
 
         value.GetType().GetProperties()
             .Where(x => !Attribute.IsDefined(x, typeof(JsonIgnoreAttribute)))
