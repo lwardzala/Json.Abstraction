@@ -39,7 +39,15 @@ public class AbstractionConverter<TAbstraction> : ConverterBase<TAbstraction>
             .Where(x => !Attribute.IsDefined(x, typeof(JsonIgnoreAttribute)))
             .ToList().ForEach(property =>
         {
-            var propertyJsonName = ConvertPropertyName(options, property.Name);
+            string propertyJsonName = string.Empty;
+            if (Attribute.GetCustomAttribute(property, typeof(JsonPropertyNameAttribute), true) is JsonPropertyNameAttribute attr)
+            {
+                propertyJsonName = attr.Name;
+            }
+            else
+            {
+                propertyJsonName = ConvertPropertyName(options, property.Name);
+            }
             var propertyValue = value.GetType().GetProperty(property.Name)?.GetValue(value);
 
             if (propertyValue != null || !options.IgnoreNullValues)
@@ -71,7 +79,15 @@ public class AbstractionConverter<TAbstraction> : ConverterBase<TAbstraction>
             .Where(x => !Attribute.IsDefined(x, typeof(JsonIgnoreAttribute)))
             .ToList().ForEach(property =>
         {
-            var jsonPropertyName = ConvertPropertyName(options, property.Name);
+            string jsonPropertyName = string.Empty;
+            if (Attribute.GetCustomAttribute(property, typeof(JsonPropertyNameAttribute), true) is JsonPropertyNameAttribute attr)
+            {
+                jsonPropertyName = attr.Name;
+            }
+            else
+            {
+                jsonPropertyName = ConvertPropertyName(options, property.Name);
+            }
             if (jsonElement.TryGetProperty(jsonPropertyName, out var jsonProperty))
             {
                 try

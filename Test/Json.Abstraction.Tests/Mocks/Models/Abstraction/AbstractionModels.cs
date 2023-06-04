@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Json.Abstraction.Tests.Mocks.Models.Abstraction
 {
@@ -19,6 +20,12 @@ namespace Json.Abstraction.Tests.Mocks.Models.Abstraction
     public abstract class CollectionObjectsAbstraction
     {
         public string Param1 { get; set; }
+    }
+
+    public class ListOfStringsWithPropertyName : CollectionObjectsAbstraction
+    {
+        [JsonPropertyName("col")]
+        public List<string> Collection { get; set; }
     }
 
     public class ListOfStrings : CollectionObjectsAbstraction

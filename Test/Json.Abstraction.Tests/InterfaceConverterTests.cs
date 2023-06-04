@@ -24,6 +24,21 @@ namespace Json.Abstraction.Tests
         }
 
         [Test]
+        public void InterfaceDeserialize_ResourceWithPropertyNameAttr()
+        {
+            var mock = ObjectMocks.GetResourceWithPropertyNameAttrMock();
+
+            var result = DeserializeJson<ResourceWithPropertyNameAttr>(mock.JsonData, mock.typeToConvert);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOf<ResourceWithPropertyNameAttr>(result, "Wrong instance");
+            Assert.AreEqual(3, result.Param1);
+            Assert.AreEqual(5, result.Param2);
+            Assert.IsInstanceOf<Nested>(result.NestedObject, "Wrong instance");
+            Assert.AreEqual("Test", result.NestedObject.Param2);
+        }
+
+        [Test]
         public void InterfaceDeserialize_ObjectWithNestedObject()
         {
             var mock = ObjectMocks.GetObjectWithNestedObjectMock();
@@ -144,6 +159,18 @@ namespace Json.Abstraction.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
         }
+
+        [Test]
+        public void InterfaceSerialize_ResourceWithPropertyNameAttr()
+        {
+            var mock = ObjectMocks.GetResourceWithPropertyNameAttrMock();
+
+            var result = SerializeJson(mock.TestObject, mock.typeToConvert);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
+        }
+
 
         [Test]
         public void InterfaceSerialize_ObjectWithNestedObject()
