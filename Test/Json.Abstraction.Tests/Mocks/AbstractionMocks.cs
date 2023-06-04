@@ -30,6 +30,29 @@ namespace Json.Abstraction.Tests.Mocks
                 typeof(CollectionObjectsAbstraction));
         }
 
+        public static (string JsonData, object TestObject, Type AbstractType) GetListOfStringsWithPropertyNameMock()
+        {
+            return (
+                @"{
+                    ""_t"": ""ListOfStringsWithPropertyName"",
+                    ""col"": [
+                        ""opt1"",
+                        ""opt2""
+                    ],
+                    ""param1"": ""Test""
+                }",
+                new ListOfStringsWithPropertyName
+                {
+                    Param1 = "Test",
+                    Collection = new List<string>
+                    {
+                        "opt1",
+                        "opt2"
+                    }
+                },
+                typeof(CollectionObjectsAbstraction));
+        }
+
         public static (string JsonData, object TestObject, Type AbstractType) GetArrayOfStringsMock()
         {
             return (

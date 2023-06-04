@@ -24,6 +24,21 @@ namespace Json.Abstraction.Tests
         }
 
         [Test]
+        public void AbstractionDeserialize_ListOfStringsWithPropertyName()
+        {
+            var mock = AbstractionMocks.GetListOfStringsWithPropertyNameMock();
+
+            var result = DeserializeJson<ListOfStringsWithPropertyName>(mock.JsonData, mock.AbstractType);
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOf<ListOfStringsWithPropertyName>(result, "Wrong instance");
+            Assert.AreEqual("Test", result.Param1);
+            Assert.IsTrue(result.Collection.Count == 2);
+            Assert.AreEqual("opt1", result.Collection[0]);
+            Assert.AreEqual("opt2", result.Collection[1]);
+        }
+
+        [Test]
         public void AbstractionDeserialize_ArrayOfStrings()
         {
             var mock = AbstractionMocks.GetArrayOfStringsMock();
@@ -122,6 +137,17 @@ namespace Json.Abstraction.Tests
         public void AbstractionSerialize_ListOfStrings()
         {
             var mock = AbstractionMocks.GetListOfStringsMock();
+
+            var result = SerializeJson(mock.TestObject, mock.AbstractType);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(GetNormalizedJson(mock.JsonData), result);
+        }
+
+        [Test]
+        public void AbstractionSerialize_ListOfStringsWithPropertyName()
+        {
+            var mock = AbstractionMocks.GetListOfStringsWithPropertyNameMock();
 
             var result = SerializeJson(mock.TestObject, mock.AbstractType);
 
